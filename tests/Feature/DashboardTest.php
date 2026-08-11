@@ -26,6 +26,12 @@ class DashboardTest extends TestCase
             ->assertSee('Data Registrasi Pasien')
             ->assertSee('Pendaftaran')
             ->assertSee('Operatif / Non Operatif')
+            ->assertSeeInOrder([
+                'Alkes',
+                'Jadwal Operasi',
+                'Pemakaian Obat',
+                'Pelayanan Operatif',
+            ])
             ->assertSee('Anggaran &amp; Perbendaharaan', false)
             ->assertSee('Administrator')
             ->assertSee('templates/templates/dist/css/tabler.css', false)
