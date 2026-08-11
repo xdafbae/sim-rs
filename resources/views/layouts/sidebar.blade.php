@@ -32,27 +32,27 @@
                             <!-- BEGIN NAVBAR MENU -->
                             @if(auth()->user()->role === 'superadmin')
                             @php
-                                $superadminModules = [
-                                    'Pendaftaran',
-                                    'Assembling',
-                                    'Fling',
-                                    'Rawat Inap',
-                                    'Rawat Jalan',
-                                    'Gizi',
-                                    'Operatif / Non Operatif',
-                                    'Laboratorium',
-                                    'Radiologi',
-                                    'Farmasi',
-                                    'Akreditasi',
-                                    'Kasir',
-                                    'Aset',
-                                    'Logistik',
-                                    'Akuntansi',
-                                    'Remunerasi',
-                                    'Anggaran & Perbendaharaan',
-                                    'Kepegawaian',
-                                    'Administrator',
-                                ];
+                            $superadminModules = [
+                            'Pendaftaran',
+                            'Assembling',
+                            'Fling',
+                            'Rawat Inap',
+                            'Rawat Jalan',
+                            'Gizi',
+                            'Operatif / Non Operatif',
+                            'Laboratorium',
+                            'Radiologi',
+                            'Farmasi',
+                            'Akreditasi',
+                            'Kasir',
+                            'Aset',
+                            'Logistik',
+                            'Akuntansi',
+                            'Remunerasi',
+                            'Anggaran & Perbendaharaan',
+                            'Kepegawaian',
+                            'Administrator',
+                            ];
                             @endphp
                             <ul class="navbar-nav superadmin-navbar">
                                 <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -68,20 +68,56 @@
                                     </a>
                                 </li>
                                 @foreach ($superadminModules as $module)
-                                    @php($moduleSlug = Str::slug($module))
-                                    <li class="nav-item dropdown" data-module-dropdown="{{ $moduleSlug }}">
+
+                                @php
+                                $moduleSlug = Str::slug($module);
+
+                                // Cek apakah sedang berada di halaman Pola Tarif
+                                $isAdministratorActive =
+                                $module === 'Administrator'
+                                && request()->routeIs('pola_tarif.*');
+                                @endphp
+
+                                <li
+                                    class="nav-item dropdown {{ $isAdministratorActive ? 'active' : '' }}"
+                                    data-module-dropdown="{{ $moduleSlug }}">
+
+                                    <a
+                                        id="module-{{ $moduleSlug }}"
+                                        href="#module-{{ $moduleSlug }}-menu"
+                                        class="nav-link dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        data-bs-auto-close="outside"
+                                        role="button"
+                                        aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}">
+
+                                        <span class="nav-link-title">
+                                            {{ $module }}
+                                        </span>
+
+                                    </a>
+
+                                    <div
+                                        id="module-{{ $moduleSlug }}-menu"
+                                        class="dropdown-menu"
+                                        aria-labelledby="module-{{ $moduleSlug }}">
+
+                                        @if ($module === 'Administrator')
+
                                         <a
-                                            id="module-{{ $moduleSlug }}"
-                                            href="#module-{{ $moduleSlug }}-menu"
-                                            class="nav-link dropdown-toggle"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
-                                            role="button"
-                                            aria-expanded="false">
-                                            <span class="nav-link-title">{{ $module }}</span>
+                                            href="{{ route('pola_tarif.show') }}"
+                                            class="dropdown-item {{ request()->routeIs('pola_tarif.*') ? 'active' : '' }}">
+
+                                            Pola Tarif Layanan
+
                                         </a>
-                                        <div id="module-{{ $moduleSlug }}-menu" class="dropdown-menu" aria-labelledby="module-{{ $moduleSlug }}"></div>
-                                    </li>
+
+                                        @endif
+
+                                    </div>
+
+                                </li>
+
                                 @endforeach
                             </ul>
                             @elseif(auth()->user()->role == 'pendaftaran')
