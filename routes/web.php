@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PolaTarifController;
 use App\Http\Controllers\JadwalOperasiController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -42,71 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard
-    |--------------------------------------------------------------------------
-    */
-    // Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
-    //     ->name('admin.dashboard');
-    /*
-    |--------------------------------------------------------------------------
-    | Master Tarif
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/pola-tarif', [PolaTarifController::class, 'show'])
-        ->name('pola_tarif.show');
-    Route::get('/pola-tarif/create', [PolaTarifController::class, 'create'])
-        ->name('pola_tarif.create');
-    Route::post('/pola-tarif', [PolaTarifController::class, 'store'])
-        ->name('pola_tarif.store');
-    Route::get('/pola-tarif/{polaTarif}/edit', [PolaTarifController::class, 'edit'])
-        ->name('pola_tarif.edit');
-    Route::put('/pola-tarif/{polaTarif}', [PolaTarifController::class, 'update'])
-        ->name('pola_tarif.update');
-    Route::delete('/pola-tarif/bulk-delete', [PolaTarifController::class, 'bulkDestroy'])
-        ->name('pola_tarif.bulk_destroy');
-    Route::delete('/pola-tarif/{polaTarif}', [PolaTarifController::class, 'destroy'])
-        ->name('pola_tarif.destroy');
-
-    // Route::get('/cara-bayar', [CaraBayarController::class, 'show'])
-    //     ->name('cara_bayar.show');
-
-    // Route::get('/kelas-perawatan', [KelasPerawatanController::class, 'show'])
-    //     ->name('kelas_perawatan.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Master Ruangan
-    |--------------------------------------------------------------------------
-    */
-
-    // Route::get('/kelas-rajal', [KelasRajalController::class, 'show'])
-    //     ->name('kelas_rajal.show');
-
-    // Route::get('/bangsal', [BangsalController::class, 'show'])
-    //     ->name('bangsal.show');
-
-    // Route::get('/distribusi-tt', [DistribusiController::class, 'show'])
-    //     ->name('distribusi.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Administrasi Sistem
-    |--------------------------------------------------------------------------
-    */
-
-    // Route::get('/user-account', [UserController::class, 'user_akun'])
-    //     ->name('user.user_akun');
-
-    // Route::get('/user-log', [UserLogController::class, 'show'])
-    //     ->name('userlog.show');
-
-    // Route::get('/tte-log', [TteLogController::class, 'show'])
-    //     ->name('ttelog.show');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
