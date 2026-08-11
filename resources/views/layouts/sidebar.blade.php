@@ -32,27 +32,6 @@
                             <!-- BEGIN NAVBAR MENU -->
                             @if(auth()->user()->role === 'superadmin')
                             @php
-                            $superadminModules = [
-                            'Pendaftaran',
-                            'Assembling',
-                            'Fling',
-                            'Rawat Inap',
-                            'Rawat Jalan',
-                            'Gizi',
-                            'Operatif / Non Operatif',
-                            'Laboratorium',
-                            'Radiologi',
-                            'Farmasi',
-                            'Akreditasi',
-                            'Kasir',
-                            'Aset',
-                            'Logistik',
-                            'Akuntansi',
-                            'Remunerasi',
-                            'Anggaran & Perbendaharaan',
-                            'Kepegawaian',
-                            'Administrator',
-                            ];
                                 $superadminModules = [
                                     'Pendaftaran',
                                     'Assembling',
@@ -82,6 +61,9 @@
                                         ['label' => 'Pemakaian Obat'],
                                         ['label' => 'Pelayanan Operatif'],
                                     ],
+                                    'Administrator' => [
+                                        ['label' => 'Pola Tarif Layanan', 'route' => 'pola_tarif.show'],
+                                    ],
                                 ];
                             @endphp
                             <ul class="navbar-nav superadmin-navbar">
@@ -98,66 +80,23 @@
                                     </a>
                                 </li>
                                 @foreach ($superadminModules as $module)
-
-                                @php
-                                $moduleSlug = Str::slug($module);
-
-                                // Cek apakah sedang berada di halaman Pola Tarif
-                                $isAdministratorActive =
-                                $module === 'Administrator'
-                                && request()->routeIs('pola_tarif.*');
-                                @endphp
-
-                                <li
-                                    class="nav-item dropdown {{ $isAdministratorActive ? 'active' : '' }}"
-                                    data-module-dropdown="{{ $moduleSlug }}">
-
-                                    <a
-                                        id="module-{{ $moduleSlug }}"
-                                        href="#module-{{ $moduleSlug }}-menu"
-                                        class="nav-link dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        data-bs-auto-close="outside"
-                                        role="button"
-                                        aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}">
-
-                                        <span class="nav-link-title">
-                                            {{ $module }}
-                                        </span>
-
-                                    </a>
-
-                                    <div
-                                        id="module-{{ $moduleSlug }}-menu"
-                                        class="dropdown-menu"
-                                        aria-labelledby="module-{{ $moduleSlug }}">
-
-                                        @if ($module === 'Administrator')
-
-                                    @php($moduleSlug = Str::slug($module))
-                                    <li class="nav-item dropdown {{ $module === 'Operatif / Non Operatif' && request()->routeIs('jadwal-operasi.*') ? 'active' : '' }}" data-module-dropdown="{{ $moduleSlug }}">
-                                        <a
-                                            href="{{ route('pola_tarif.show') }}"
-                                            class="dropdown-item {{ request()->routeIs('pola_tarif.*') ? 'active' : '' }}">
-
-                                            Pola Tarif Layanan
-
+                                    @php
+                                        $moduleSlug = Str::slug($module);
+                                        $submenuItems = $superadminSubmenus[$module] ?? [];
+                                        $isModuleActive = collect($submenuItems)->contains(fn ($submenu) => isset($submenu['route']) && request()->routeIs($submenu['route']));
+                                    @endphp
+                                    <li class="nav-item dropdown {{ $isModuleActive ? 'active' : '' }}">
+                                        <a id="module-{{ $moduleSlug }}" href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="{{ $isModuleActive ? 'true' : 'false' }}">
+                                            <span class="nav-link-title">{{ $module }}</span>
                                         </a>
-
-                                        @endif
-
-                                    </div>
-
-                                </li>
-
-                                        <div id="module-{{ $moduleSlug }}-menu" class="dropdown-menu" aria-labelledby="module-{{ $moduleSlug }}">
-                                            @foreach ($superadminSubmenus[$module] ?? [] as $submenu)
-                                                <a
-                                                    href="{{ isset($submenu['route']) ? route($submenu['route']) : '#' }}"
-                                                    class="dropdown-item {{ isset($submenu['route']) && request()->routeIs($submenu['route']) ? 'active' : '' }}">
+                                        <div class="dropdown-menu" aria-labelledby="module-{{ $moduleSlug }}">
+                                            @forelse ($submenuItems as $submenu)
+                                                <a href="{{ isset($submenu['route']) ? route($submenu['route']) : '#' }}" class="dropdown-item {{ isset($submenu['route']) && request()->routeIs($submenu['route']) ? 'active' : '' }}">
                                                     {{ $submenu['label'] }}
                                                 </a>
-                                            @endforeach
+                                            @empty
+                                                <span class="dropdown-item-text text-muted">Menu belum tersedia</span>
+                                            @endforelse
                                         </div>
                                     </li>
                                 @endforeach
