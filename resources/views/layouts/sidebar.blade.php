@@ -53,6 +53,36 @@
                             'Kepegawaian',
                             'Administrator',
                             ];
+                                $superadminModules = [
+                                    'Pendaftaran',
+                                    'Assembling',
+                                    'Fling',
+                                    'Rawat Inap',
+                                    'Rawat Jalan',
+                                    'Gizi',
+                                    'Operatif / Non Operatif',
+                                    'Laboratorium',
+                                    'Radiologi',
+                                    'Farmasi',
+                                    'Akreditasi',
+                                    'Kasir',
+                                    'Aset',
+                                    'Logistik',
+                                    'Akuntansi',
+                                    'Remunerasi',
+                                    'Anggaran & Perbendaharaan',
+                                    'Kepegawaian',
+                                    'Administrator',
+                                ];
+
+                                $superadminSubmenus = [
+                                    'Operatif / Non Operatif' => [
+                                        ['label' => 'Alkes'],
+                                        ['label' => 'Jadwal Operasi', 'route' => 'jadwal-operasi.index'],
+                                        ['label' => 'Pemakaian Obat'],
+                                        ['label' => 'Pelayanan Operatif'],
+                                    ],
+                                ];
                             @endphp
                             <ul class="navbar-nav superadmin-navbar">
                                 <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -104,6 +134,8 @@
 
                                         @if ($module === 'Administrator')
 
+                                    @php($moduleSlug = Str::slug($module))
+                                    <li class="nav-item dropdown {{ $module === 'Operatif / Non Operatif' && request()->routeIs('jadwal-operasi.*') ? 'active' : '' }}" data-module-dropdown="{{ $moduleSlug }}">
                                         <a
                                             href="{{ route('pola_tarif.show') }}"
                                             class="dropdown-item {{ request()->routeIs('pola_tarif.*') ? 'active' : '' }}">
@@ -118,6 +150,16 @@
 
                                 </li>
 
+                                        <div id="module-{{ $moduleSlug }}-menu" class="dropdown-menu" aria-labelledby="module-{{ $moduleSlug }}">
+                                            @foreach ($superadminSubmenus[$module] ?? [] as $submenu)
+                                                <a
+                                                    href="{{ isset($submenu['route']) ? route($submenu['route']) : '#' }}"
+                                                    class="dropdown-item {{ isset($submenu['route']) && request()->routeIs($submenu['route']) ? 'active' : '' }}">
+                                                    {{ $submenu['label'] }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </li>
                                 @endforeach
                             </ul>
                             @elseif(auth()->user()->role == 'pendaftaran')
