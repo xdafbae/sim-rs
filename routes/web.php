@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PolaTarifController;
+use App\Http\Controllers\PenjualanObatController;
 use App\Http\Controllers\JadwalOperasiController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -31,6 +32,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('farmasi')->name('farmasi.')->group(function () {
+        Route::get('/penjualan-obat', [PenjualanObatController::class, 'index'])->name('penjualan-obat.index');
+        Route::get('/penjualan-obat/create', [PenjualanObatController::class, 'create'])->name('penjualan-obat.create');
+        Route::post('/penjualan-obat', [PenjualanObatController::class, 'store'])->name('penjualan-obat.store');
+        Route::get('/penjualan-obat/{penjualanObat}/edit', [PenjualanObatController::class, 'edit'])->name('penjualan-obat.edit');
+        Route::put('/penjualan-obat/{penjualanObat}', [PenjualanObatController::class, 'update'])->name('penjualan-obat.update');
+        Route::delete('/penjualan-obat/{penjualanObat}', [PenjualanObatController::class, 'destroy'])->name('penjualan-obat.destroy');
+        Route::view('/pemesanan-obat', 'farmasi.index', ['title' => 'Pemesanan Obat'])->name('pemesanan-obat.index');
+        Route::view('/pemasukan-obat', 'farmasi.index', ['title' => 'Pemasukan Obat'])->name('pemasukan-obat.index');
+        Route::view('/mutasi-obat', 'farmasi.index', ['title' => 'Mutasi Obat'])->name('mutasi-obat.index');
+        Route::view('/jurnal-obat', 'farmasi.index', ['title' => 'Jurnal Obat'])->name('jurnal-obat.index');
+        Route::view('/obat', 'farmasi.index', ['title' => 'Obat'])->name('obat.index');
+        Route::view('/persediaan-obat', 'farmasi.index', ['title' => 'Persediaan Obat'])->name('persediaan-obat.index');
+        Route::view('/pbf', 'farmasi.index', ['title' => 'PBF'])->name('pbf.index');
+        Route::view('/apotek-online', 'farmasi.index', ['title' => 'Apotek Online'])->name('apotek-online.index');
+    });
+
     Route::get('/jadwal-operasi', [JadwalOperasiController::class, 'index'])->name('jadwal-operasi.index');
     Route::get('/jadwal-operasi/data', [JadwalOperasiController::class, 'data'])->name('jadwal-operasi.data');
     Route::get('/jadwal-operasi/tambah', [JadwalOperasiController::class, 'create'])->name('jadwal-operasi.create');
