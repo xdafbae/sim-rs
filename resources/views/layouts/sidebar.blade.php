@@ -64,6 +64,18 @@
                                     'Administrator' => [
                                         ['label' => 'Pola Tarif Layanan', 'route' => 'pola_tarif.show'],
                                     ],
+                                    'Farmasi' => [
+                                        ['label' => 'Penjualan Obat', 'route' => 'farmasi.penjualan-obat.index'],
+                                        ['label' => 'Pemesanan Obat', 'route' => 'farmasi.pemesanan-obat.index'],
+                                        ['label' => 'Pemasukan Obat', 'route' => 'farmasi.pemasukan-obat.index'],
+                                        ['label' => 'Mutasi Obat', 'route' => 'farmasi.mutasi-obat.index'],
+                                        ['label' => 'Jurnal Obat', 'route' => 'farmasi.jurnal-obat.index'],
+                                        ['label' => 'Obat', 'route' => 'farmasi.obat.index'],
+                                        ['label' => 'Persediaan Obat', 'route' => 'farmasi.persediaan-obat.index'],
+                                        ['label' => 'PBF', 'route' => 'farmasi.pbf.index'],
+                                        ['label' => 'Apotek Online', 'route' => 'farmasi.apotek-online.index'],
+                                    ],
+
                                 ];
                             @endphp
                             <ul class="navbar-nav superadmin-navbar">
