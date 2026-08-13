@@ -58,7 +58,7 @@
                                     'Operatif / Non Operatif' => [
                                         ['label' => 'Alkes'],
                                         ['label' => 'Jadwal Operasi', 'route' => 'jadwal-operasi.index'],
-                                        ['label' => 'Pemakaian Obat'],
+                                        ['label' => 'Pemakaian Obat', 'route' => 'pemakaian-obat.index'],
                                         ['label' => 'Pelayanan Operatif'],
                                     ],
                                     'Administrator' => [

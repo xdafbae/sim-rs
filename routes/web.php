@@ -4,6 +4,7 @@ use App\Http\Controllers\PolaTarifController;
 use App\Http\Controllers\PenjualanObatController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\JadwalOperasiController;
+use App\Http\Controllers\PemakaianObatController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/jadwal-operasi/{jadwalOperasi}/edit', [JadwalOperasiController::class, 'edit'])->name('jadwal-operasi.edit');
     Route::patch('/jadwal-operasi/{jadwalOperasi}', [JadwalOperasiController::class, 'update'])->name('jadwal-operasi.update');
     Route::delete('/jadwal-operasi/{jadwalOperasi}', [JadwalOperasiController::class, 'destroy'])->name('jadwal-operasi.destroy');
+
+    Route::get('/pemakaian-obat', [PemakaianObatController::class, 'index'])->name('pemakaian-obat.index');
+    Route::get('/pemakaian-obat/tambah', [PemakaianObatController::class, 'create'])->name('pemakaian-obat.create');
+    Route::post('/pemakaian-obat', [PemakaianObatController::class, 'store'])->name('pemakaian-obat.store');
+    Route::delete('/pemakaian-obat/{pemakaianObat}', [PemakaianObatController::class, 'destroy'])->name('pemakaian-obat.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
