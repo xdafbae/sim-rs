@@ -33,6 +33,13 @@ class PelayananLaboratoriumController extends Controller
         return view('laboratorium.pelayanan.create');
     }
 
+    public function dataPemeriksaan(): View
+    {
+        return view('laboratorium.data-pemeriksaan.index', [
+            'pelayanans' => PelayananLaboratorium::latest('tanggal_pelayanan')->get(),
+        ]);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $pelayanan = PelayananLaboratorium::create($this->validated($request) + [

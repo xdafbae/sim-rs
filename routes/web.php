@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/pelayanan/{pelayanan}', [PelayananLaboratoriumController::class, 'update'])->name('pelayanan.update');
         Route::delete('/pelayanan/{pelayanan}', [PelayananLaboratoriumController::class, 'destroy'])->name('pelayanan.destroy');
         Route::get('/pelayanan', [PelayananLaboratoriumController::class, 'index'])->name('pelayanan.index');
-        Route::view('/data-pemeriksaan', 'laboratorium.pelayanan.index', ['title' => 'Data Pemeriksaan'])->name('data-pemeriksaan.index');
+        Route::get('/data-pemeriksaan', [PelayananLaboratoriumController::class, 'dataPemeriksaan'])->name('data-pemeriksaan.index');
         Route::view('/nilai-normal-bahp', 'laboratorium.pelayanan.index', ['title' => 'Nilai Normal & BAHP'])->name('nilai-normal-bahp.index');
         Route::view('/persediaan-obat', 'laboratorium.pelayanan.index', ['title' => 'Persediaan Obat'])->name('persediaan-obat.index');
     });
