@@ -75,6 +75,12 @@
                                         ['label' => 'PBF', 'route' => 'farmasi.pbf.index'],
                                         ['label' => 'Apotek Online', 'route' => 'farmasi.apotek-online.index'],
                                     ],
+                                    'Laboratorium' => [
+                                        ['label' => 'Pelayanan Laboratorium', 'route' => 'laboratorium.pelayanan.index'],
+                                        ['label' => 'Data Pemeriksaan', 'route' => 'laboratorium.data-pemeriksaan.index'],
+                                        ['label' => 'Nilai Normal & BAHP', 'route' => 'laboratorium.nilai-normal-bahp.index'],
+                                        ['label' => 'Persediaan Obat', 'route' => 'laboratorium.persediaan-obat.index'],
+                                    ],
 
                                 ];
                             @endphp

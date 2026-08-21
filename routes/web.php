@@ -5,6 +5,7 @@ use App\Http\Controllers\PenjualanObatController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\JadwalOperasiController;
 use App\Http\Controllers\PemakaianObatController;
+use App\Http\Controllers\PelayananLaboratoriumController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,19 @@ Route::middleware('auth')->group(function () {
         Route::view('/persediaan-obat', 'farmasi.index', ['title' => 'Persediaan Obat'])->name('persediaan-obat.index');
         Route::view('/pbf', 'farmasi.index', ['title' => 'PBF'])->name('pbf.index');
         Route::view('/apotek-online', 'farmasi.index', ['title' => 'Apotek Online'])->name('apotek-online.index');
+    });
+
+    Route::prefix('laboratorium')->name('laboratorium.')->group(function () {
+        Route::get('/pelayanan/cari-pasien/{noRm}', [PelayananLaboratoriumController::class, 'cariPasien'])->name('pelayanan.cari-pasien');
+        Route::get('/pelayanan/create', [PelayananLaboratoriumController::class, 'create'])->name('pelayanan.create');
+        Route::post('/pelayanan', [PelayananLaboratoriumController::class, 'store'])->name('pelayanan.store');
+        Route::get('/pelayanan/{pelayanan}/edit', [PelayananLaboratoriumController::class, 'edit'])->name('pelayanan.edit');
+        Route::put('/pelayanan/{pelayanan}', [PelayananLaboratoriumController::class, 'update'])->name('pelayanan.update');
+        Route::delete('/pelayanan/{pelayanan}', [PelayananLaboratoriumController::class, 'destroy'])->name('pelayanan.destroy');
+        Route::get('/pelayanan', [PelayananLaboratoriumController::class, 'index'])->name('pelayanan.index');
+        Route::view('/data-pemeriksaan', 'laboratorium.pelayanan.index', ['title' => 'Data Pemeriksaan'])->name('data-pemeriksaan.index');
+        Route::view('/nilai-normal-bahp', 'laboratorium.pelayanan.index', ['title' => 'Nilai Normal & BAHP'])->name('nilai-normal-bahp.index');
+        Route::view('/persediaan-obat', 'laboratorium.pelayanan.index', ['title' => 'Persediaan Obat'])->name('persediaan-obat.index');
     });
 
     Route::get('/jadwal-operasi', [JadwalOperasiController::class, 'index'])->name('jadwal-operasi.index');
